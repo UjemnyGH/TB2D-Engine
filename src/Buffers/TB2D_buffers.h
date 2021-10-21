@@ -9,14 +9,8 @@ namespace tb2d
     {
     private:
         unsigned int ID;
-        static unsigned int VAOCount;
 
     public:
-        TB2D_VAO()
-        {
-            VAOCount++;
-        }
-
         //create vertex array object
         void createVAO();
         //bind vertex array object
@@ -33,19 +27,12 @@ namespace tb2d
     {
     private:
         unsigned int ID;
-        static unsigned int VBOCount;
 
     public:
-        TB2D_VBO()
-        {
-            VBOCount++;
-        }
-
         //create vertex buffer object
         void createVBO();
-        template<typename T>
         //bind vertex buffer object
-        void bindVBO(T data[], size_t dataSize, int usage, unsigned int index);
+        void bindVBO(const float data[], const size_t dataSize, int usage, unsigned int index);
         //unbind vertex buffer object
         void unbindVBO();
         //delete vertex buffer object
@@ -54,23 +41,34 @@ namespace tb2d
 
     typedef TB2D_VBO VBO;
 
+    class TB2D_CBO
+    {
+    private:
+        unsigned int ID;
+
+    public:
+        //create vertex buffer object
+        void createCBO();
+        //bind vertex buffer object
+        void bindCBO(const float data[], const size_t dataSize, int usage, unsigned int index);
+        //unbind vertex buffer object
+        void unbindCBO();
+        //delete vertex buffer object
+        void deleteCBO();
+    };
+
+    typedef TB2D_CBO CBO;
+
     class TB2D_EBO
     {
     private:
         unsigned int ID;
-        static unsigned int EBOCount;
 
     public:
-        TB2D_EBO()
-        {
-            EBOCount++;
-        }
-
         //create element buffer object
         void createEBO();
-        template<typename T>
         //bind element buffer object
-        void bindEBO(T data[], size_t dataSize, int usage);
+        void bindEBO(const unsigned int data[], const size_t dataSize, int usage);
         //unbind element buffer object
         void unbindEBO();
         //delete element buffer object
@@ -83,19 +81,42 @@ namespace tb2d
     {
     private:
         unsigned int ID;
-        static unsigned int ShadersCount;
 
     public:
-        TB2D_Shaders()
-        {
-            ShadersCount++;
-        }
-
         //create shaders
         void createShader(const std::string &vertexShaderName, const std::string &fragmentShaderName);
+        //bind shader
+        void bindShader();
+        //get shader id
+        unsigned int shaderID()
+        {
+            return ID;
+        }
+        //unbind shader
+        void unbindShader();
         //delete shaders
         void deleteShader();  
     };
 
     typedef TB2D_Shaders Shader;
+
+    class TB2D_Texture
+    {
+    private:
+        unsigned int ID;
+
+        int width, height, nrChannels;
+
+    public:
+        //create texture
+        void createTexture();
+        //bind texture
+        void bindTexture(const std::string &path, const int &wrapping, const int &filtering);
+        //unbind texture
+        void unbindTexture();
+        //delete texture
+        void deleteTexture();
+    };
+
+    typedef TB2D_Texture Texture;
 }
